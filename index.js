@@ -1,3 +1,4 @@
+// CREAR UN USUARIO 
 let deseaCrearUsuario = confirm("¿Desea crear un usuario?")
 
 if (deseaCrearUsuario) {
@@ -25,43 +26,74 @@ do {
     continuar = prompt("respuesta incorrecta, porfavor ingrese una valida")
     }
 
-}while(continuar !== "si" && continuar !== "no")
+}while(continuar !== "si" && continuar !== "no") 
 
-let avanzar = confirm("¿Desea añadir elementos a su carrito?");
-let productos = "Buzos, anteojos, zapatillas, remeras";
 
-function carrito(item) {
-  switch (item) {
-    case "buzos":
-      alert("Usted ha añadido un buzo a su carrito.");
-      break;
 
-    case "anteojos":
-      alert("Usted ha añadido unos anteojos a su carrito.");
-      break;
+// aca esta el array con la lista de productos, nombre y precios
+let ropaAccesorios = [
+  
+  {
+    id: 1,
+    nombre: "Buzo black life",
+    precio: 38000,
+  },
+  {
+    id: 2,
+    nombre: "Buzo fire angel",
+    precio: 28000,
+  },
+  {
+    id: 3,
+    nombre: "Buzo soft white",
+    precio: 30000,
+  },
+  {
+    id: 4,
+    nombre: "Buzo liricals",
+    precio: 50000,
+  },
+  {
+    id: 5,
+    nombre: "Gorra Lacoste",
+    precio: 10000,
+  },
+];
 
-    case "zapatillas":
-      alert("Usted ha añadido unas zapatillas a su carrito.");
-      break;
+// ACA VA A ESTAR EL CARRITO DONDE DESPUES SE VAN A PUSHEAR LOS PRODUCTOS INGRESADOS 
+let carrito = []
 
-    case "remeras":
-      alert("Usted ha añadido una remera a su carrito.");
-      break;
+function buscarRopa() {
+  let elegir = prompt("Por favor, elija el nombre de los productos disponibles por el momento: (Buzo black life, Buzo fire angel, Buzo soft white, Buzo liricals, Gorra Lacoste)");
 
-    default:
-      alert("La información proporcionada no es válida.");
-      break;
-  }
+  let producto = ropaAccesorios.find((p) => p.nombre.toLowerCase() === elegir.toLowerCase());
+
+  return producto;
 }
 
-if (avanzar) {
-  let elemento = prompt("Ingrese el elemento que desea añadir a su carrito:\n" + productos);
 
-  if (elemento) {
-    carrito(elemento.toLowerCase());
+function agregarProductosAlCarrito(producto) {
+  if (producto) {
+    let cantidadProductos = parseInt(prompt("Por favor, ingrese la cantidad de productos que desea comprar:"));
+    carrito.push({
+      producto: producto.nombre,
+      cantidadProductos: cantidadProductos,
+      subtotal: producto.precio * cantidadProductos
+    });
   } else {
-    alert("No se proporcionó un elemento válido. El proceso de añadir elementos ha sido cancelado.");
+    alert("El producto seleccionado no existe.");
   }
-} else {
-  alert("Cancelando...");
 }
+
+
+function confirmarCarrito() {
+  while (true) {
+    let producto = buscarRopa();
+    agregarProductosAlCarrito(producto);
+
+    if (!confirm("Desea agregar otro producto al carrito?")) {
+      break;
+    }
+  }
+}
+confirmarCarrito()
