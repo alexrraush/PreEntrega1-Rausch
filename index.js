@@ -1,99 +1,73 @@
-// CREAR UN USUARIO 
-let deseaCrearUsuario = confirm("¿Desea crear un usuario?")
+// Función para agregar un producto al carrito
+function agregarAlCarrito(nombreProducto) {
+    // Verificar si ya hay un carrito en el sessionStorage
+    let carrito = JSON.parse(sessionStorage.getItem('carrito')) || [];
 
-if (deseaCrearUsuario) {
-  let nombreUsuario = prompt("Ingrese su nombre de usuario:")
-  let contraseña = prompt("Ingrese su contraseña:")
+    // Verificar si el producto ya está en el carrito
+    let productoExistente = carrito.find(producto => producto.nombre === nombreProducto);
 
-  if (nombreUsuario && contraseña) {
-    alert("¡Usuario creado exitosamente!")
-  } else {
-    alert("No se proporcionaron datos de usuario. El proceso de creación de usuario ha sido cancelado.")
-  }
-} else {
-  alert("Cancelando...")
-}
-
-let continuar = prompt("desea continuar? SI O NO")
-do {
-
-    if (continuar == "si") {
-        alert("continuando..")
-    }
-    else if (continuar == "no") {
-        alert("saliendo..")
-    }else{
-    continuar = prompt("respuesta incorrecta, porfavor ingrese una valida")
+    if (productoExistente) {
+        // Si el producto ya existe en el carrito, aumentar la cantidad
+        productoExistente.cantidad++;
+    } else {
+        // Si el producto no existe en el carrito, agregarlo
+        carrito.push({ nombre: nombreProducto, cantidad: 1 });
     }
 
-}while(continuar !== "si" && continuar !== "no") 
+    // Actualizar el carrito en el sessionStorage
+    sessionStorage.setItem('carrito', JSON.stringify(carrito));
 
-
-
-// aca esta el array con la lista de productos, nombre y precios
-let ropaAccesorios = [
-  
-  {
-    id: 1,
-    nombre: "Buzo black life",
-    precio: 38000,
-  },
-  {
-    id: 2,
-    nombre: "Buzo fire angel",
-    precio: 28000,
-  },
-  {
-    id: 3,
-    nombre: "Buzo soft white",
-    precio: 30000,
-  },
-  {
-    id: 4,
-    nombre: "Buzo liricals",
-    precio: 50000,
-  },
-  {
-    id: 5,
-    nombre: "Gorra Lacoste",
-    precio: 10000,
-  },
-];
-
-// ACA VA A ESTAR EL CARRITO DONDE DESPUES SE VAN A PUSHEAR LOS PRODUCTOS INGRESADOS 
-let carrito = []
-
-function buscarRopa() {
-  let elegir = prompt("Por favor, elija el nombre de los productos disponibles por el momento: (Buzo black life, Buzo fire angel, Buzo soft white, Buzo liricals, Gorra Lacoste)");
-
-  let producto = ropaAccesorios.find((p) => p.nombre.toLowerCase() === elegir.toLowerCase());
-
-  return producto;
-}
-
-
-function agregarProductosAlCarrito(producto) {
-  if (producto) {
-    let cantidadProductos = parseInt(prompt("Por favor, ingrese la cantidad de productos que desea comprar:"));
-    carrito.push({
-      producto: producto.nombre,
-      cantidadProductos: cantidadProductos,
-      subtotal: producto.precio * cantidadProductos
+    // Mostrar una alerta de que el producto se ha añadido al carrito
+    Swal.fire({
+        icon: 'success',
+        title: 'Producto añadido al carrito',
+        text: `${nombreProducto} se ha añadido correctamente al carrito.`,
     });
-  } else {
-    alert("El producto seleccionado no existe.");
-  }
 }
 
+// Función para mostrar el contenido del carrito cuando se hace clic en el botón "Ver Carrito"
+document.getElementById('ver-carrito').addEventListener('click', function () {
+    let carrito = JSON.parse(sessionStorage.getItem('carrito')) || [];
 
-function confirmarCarrito() {
-  while (true) {
-    let producto = buscarRopa();
-    agregarProductosAlCarrito(producto);
+    if (carrito.length === 0) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Carrito de Compras',
+            text: 'El carrito está vacío.',
+        });
+    } else {
+        let contenido = '';
+        carrito.forEach(producto => {
+            contenido += `${producto.nombre} - Cantidad: ${producto.cantidad}\n`;
+        });
 
-    if (!confirm("Desea agregar otro producto al carrito?")) {
-      break;
+        Swal.fire({
+            icon: 'info',
+            title: 'Carrito de Compras',
+            text: contenido,
+        });
     }
-  }
+});
+
+// Función para eliminar todos los productos del carrito de compras
+function borrarCarrito() {
+    // Eliminar el carrito del sessionStorage
+    sessionStorage.removeItem('carrito');
+
+    // Mostrar un mensaje de éxito usando Swal para confirmar que el carrito se ha vaciado
+    Swal.fire({
+        icon: 'success',
+        title: 'Carrito de Compras',
+        text: 'El carrito se ha vaciado correctamente.',
+    });
 }
-confirmarCarrito()
+
+// Agregar escuchadores de eventos de clic a los botones
+document.getElementById('ver-carrito').addEventListener('click', function () {
+    // ... (código existente para mostrar el contenido del carrito)
+});
+
+document.getElementById('borrar-carrito').addEventListener('click', function () {
+    // Llamar a la función para borrar el carrito
+    borrarCarrito();
+});

@@ -1,0 +1,120 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilos para los productos */
+  .tarjetas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 16px;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .card-text {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .btn {
+    cursor: pointer;
+  }
+  
+  /* Estilos para los botones */
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+  
+  /* Estilos para el encabezado y la navegación */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 12px;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  nav button {
+    margin-left: 8px;
+  }
+  
+  /* Estilos para el carrito de compras */
+  main {
+    margin-top: 20px;
+  }
+  
+  /* Estilos para el mensaje de alerta de SweetAlert */
+  .swal2-title,
+  .swal2-content {
+    font-family: Arial, sans-serif !important;
+  }
+  
+  .swal2-icon {
+    font-size: 36px !important;
+    margin-bottom: 10px;
+  }
+  
+  .swal2-icon.success {
+    color: #28a745 !important;
+  }
+  
+  .swal2-icon.info {
+    color: #17a2b8 !important;
+  }
+  
+  /* Estilos adicionales para mejorar la experiencia de usuario */
+  button:focus {
+    outline: none;
+  }
