@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "Buzo liricals",
+        "descripcion": "Diseñado para aquellas personas que buscan una apariencia desenfadada y a la moda, este buzo se caracteriza por su amplio corte y su ajuste holgado que permite una total libertad de movimiento.",
+        "img": "./img/BUZO-ESP-CRUZ.png"
+    },
+    {
+        "nombre": "Buzo no god masters",
+        "descripcion": "Confeccionado con materiales de alta calidad, el buzo oversize ofrece una sensación suave y reconfortante al tacto, envolviendo al portador en una nube de comodidad, ademas de que combina con todo.",
+        "img": "./img/Buzo-Master-Verde-Trasero.png"
+    },
+    {
+        "nombre": "Buzo naranja",
+        "descripcion": "Disponible en una amplia gama de colores y estampados, el buzo oversize se adapta a diferentes preferencias y estilos personales, permitiendo a cada individuo expresar su creatividad.",
+        "img": "/img/Buzo-Naranja-2.png"
+    },
+    {
+        "nombre": "Buzo negro ",
+        "descripcion": "Prenda unisex que puede ser disfrutada tanto por hombres como por mujeres, convirtiéndose en una opción inclusiva y diversa. ¡Prepárate para sentirte a la moda con este imprescindible atuendo!",
+        "img": "./img/Buzo-Negro-2.png"
+    }
+]

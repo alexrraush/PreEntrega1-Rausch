@@ -1,23 +1,24 @@
-// Función para agregar un producto al carrito
-function agregarAlCarrito(nombreProducto) {
-    // Verificar si ya hay un carrito en el sessionStorage
-    let carrito = JSON.parse(sessionStorage.getItem('carrito')) || [];
+// Inicializa el carrito como un array vacío
+let carrito = [];
 
-    // Verificar si el producto ya está en el carrito
+// Función para mostrar el contenido del carrito
+function mostrarContenidoCarrito() {
+    let contenido = '';
+    carrito.forEach(producto => {
+        contenido += `${producto.nombre} - Cantidad: ${producto.cantidad}\n`;
+    });
+    return contenido;
+}
+
+function agregarAlCarrito(nombreProducto) {
     let productoExistente = carrito.find(producto => producto.nombre === nombreProducto);
 
     if (productoExistente) {
-        // Si el producto ya existe en el carrito, aumentar la cantidad
         productoExistente.cantidad++;
     } else {
-        // Si el producto no existe en el carrito, agregarlo
         carrito.push({ nombre: nombreProducto, cantidad: 1 });
     }
 
-    // Actualizar el carrito en el sessionStorage
-    sessionStorage.setItem('carrito', JSON.stringify(carrito));
-
-    // Mostrar una alerta de que el producto se ha añadido al carrito
     Swal.fire({
         icon: 'success',
         title: 'Producto añadido al carrito',
@@ -25,10 +26,7 @@ function agregarAlCarrito(nombreProducto) {
     });
 }
 
-// Función para mostrar el contenido del carrito cuando se hace clic en el botón "Ver Carrito"
 document.getElementById('ver-carrito').addEventListener('click', function () {
-    let carrito = JSON.parse(sessionStorage.getItem('carrito')) || [];
-
     if (carrito.length === 0) {
         Swal.fire({
             icon: 'info',
@@ -36,38 +34,41 @@ document.getElementById('ver-carrito').addEventListener('click', function () {
             text: 'El carrito está vacío.',
         });
     } else {
-        let contenido = '';
-        carrito.forEach(producto => {
-            contenido += `${producto.nombre} - Cantidad: ${producto.cantidad}\n`;
-        });
-
         Swal.fire({
             icon: 'info',
             title: 'Carrito de Compras',
-            text: contenido,
+            text: mostrarContenidoCarrito(),
         });
     }
 });
 
-// Función para eliminar todos los productos del carrito de compras
-function borrarCarrito() {
-    // Eliminar el carrito del sessionStorage
-    sessionStorage.removeItem('carrito');
-
-    // Mostrar un mensaje de éxito usando Swal para confirmar que el carrito se ha vaciado
+document.getElementById('borrar-carrito').addEventListener('click', function () {
+    carrito = [];
     Swal.fire({
         icon: 'success',
         title: 'Carrito de Compras',
         text: 'El carrito se ha vaciado correctamente.',
     });
-}
-
-// Agregar escuchadores de eventos de clic a los botones
-document.getElementById('ver-carrito').addEventListener('click', function () {
-    // ... (código existente para mostrar el contenido del carrito)
 });
 
-document.getElementById('borrar-carrito').addEventListener('click', function () {
-    // Llamar a la función para borrar el carrito
-    borrarCarrito();
-});
+// Obtener productos desde un archivo JSON 
+fetch('data.json') 
+    .then(response => response.json())
+    .then(data => {
+        const contenedor = document.querySelector('.tarjetas');
+        data.forEach(producto => {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'card';
+            tarjeta.style = 'width: 18rem;';
+            tarjeta.innerHTML = `
+                <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
+                <div class="card-body">
+                    <h5 class="card-title">${producto.nombre}</h5>
+                    <p class="card-text">${producto.descripcion}</p>
+                    <button class="btn btn-primary" onclick="agregarAlCarrito('${producto.nombre}')">Añadir al carrito</button>
+                </div>
+            `;
+            contenedor.appendChild(tarjeta);
+        });
+    })
+    .catch(error => console.error('Error al obtener los productos:', error));
